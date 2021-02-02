@@ -21,7 +21,7 @@ namespace leave_management
             {
                 var user = new IdentityUser
                 {
-                    UserName = "MEHEDI",
+                    UserName = "me.mehedi@hotmail.com",
                     Email = "me.mehedi@hotmail.com"
                 };
                 var result = userManager.CreateAsync(user, "01714336339Mm2!").Result;
