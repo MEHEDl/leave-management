@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using leave_management.Contracts;
 using leave_management.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace leave_management.Repository
 {
@@ -36,14 +37,24 @@ namespace leave_management.Repository
 
         public ICollection<LeaveAllocation> FindAll()
         {
-            var LeaveAllocations = _db.LeaveAllocations.ToList();
+            var LeaveAllocations = _db.LeaveAllocations.Include(q=>q.LeaveType).ToList();
             return LeaveAllocations;
         }
 
         public LeaveAllocation FindBy(int id)
         {
-            var leaveAllocation = _db.LeaveAllocations.Find(id);
+            var leaveAllocation = _db.LeaveAllocations
+                .Include(q=> q.LeaveType)
+                .Include(q=>q.Employee)
+                .FirstOrDefault(q=>q.Id==id);
             return leaveAllocation;
+
+        }
+
+        public ICollection<LeaveAllocation> GetLeaveAllocationsByEmployee(string id)
+        {
+            var period = DateTime.Now.Year;
+            return FindAll().Where(q => q.EmployeeId == id && q.Period == period).ToList();
 
         }
 
