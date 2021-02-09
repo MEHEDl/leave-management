@@ -265,7 +265,7 @@ namespace leave_management.Data.Migrations
                     b.Property<string>("ApprovedById")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<bool?>("Approvved")
+                    b.Property<bool?>("Approved")
                         .HasColumnType("bit");
 
                     b.Property<DateTime>("DateActioneded")

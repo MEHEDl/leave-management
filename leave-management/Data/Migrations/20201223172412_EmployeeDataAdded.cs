@@ -50,7 +50,7 @@ namespace leave_management.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "LeaveHistories",
+                name: "LeaveRequest",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -61,7 +61,7 @@ namespace leave_management.Data.Migrations
                     LeaveTypeId = table.Column<int>(nullable: false),
                     DateRequested = table.Column<DateTime>(nullable: false),
                     DateActioneded = table.Column<DateTime>(nullable: false),
-                    Approvved = table.Column<bool>(nullable: true),
+                    Approved = table.Column<bool>(nullable: true),
                     ApprovedById = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
