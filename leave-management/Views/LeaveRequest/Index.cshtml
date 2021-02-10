@@ -7,10 +7,46 @@
 
 <h1>Index</h1>
 
+<div class="row">
+    <div class="col-md-3">
+         <div class="card" style="width: 18rem;">
+             <div class="card-body text-center">
+                 <h1 class="card-title">@Model.TotalRequests</h1>
+                 <h5 class="card-text">@Html.DisplayNameFor(moddel => Model.TotalRequests)</h5>
+             </div>
+         </div>
+    </div>
+    <div class="col-md-3">
+         <div class="card" style="width: 18rem;">
+             <div class="card-body text-center">
+                 <h1 class="card-title text-warning">@Model.PendingRequests</h1>
+                 <h5 class="card-text">@Html.DisplayNameFor(moddel => Model.PendingRequests)</h5>
+             </div>
+         </div>
+    </div>
+    <div class="col-md-3">
+         <div class="card" style="width: 18rem;">
+             <div class="card-body text-center">
+                 <h1 class="card-title text-success">@Model.ApprovedRequests</h1>
+                 <h5 class="card-text">@Html.DisplayNameFor(moddel => Model.ApprovedRequests)</h5>
+             </div>
+         </div>
+    </div>
+    <div class="col-md-3">
+         <div class="card" style="width: 18rem;">
+             <div class="card-body text-center">
+                 <h1 class="card-title text-danger">@Model.RejectedRequests</h1>
+                 <h5 class="card-text">@Html.DisplayNameFor(moddel => Model.RejectedRequests)</h5>
+             </div>
+         </div>
+    </div>
+</div>
+
+
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table id="tblData" class="table">
     <thead>
         <tr>
             <th>
@@ -67,7 +103,7 @@
                 }
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
             </td>

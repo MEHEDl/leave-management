@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace leave_management.Controllers
 {
@@ -17,14 +18,20 @@ namespace leave_management.Controllers
     public class LeaveRequestController : Controller
     {
         private readonly ILeaveRequestRepository _leaveRequestRepo;
+        private readonly ILeaveTypeRepository _leavetyperepo;
+        private readonly ILeaveAllocationRepository _leaveallocrepo;
         private readonly IMapper _mapper;
         private readonly UserManager<Employee> _userManager;
 
         public LeaveRequestController(ILeaveRequestRepository leaveRequestRepo,
+                ILeaveTypeRepository leavetyperepo,
+                ILeaveAllocationRepository leaveallocrepo,
                 IMapper mapper,
                 UserManager<Employee> userManager)
         {
             _leaveRequestRepo = leaveRequestRepo;
+            _leavetyperepo = leavetyperepo;
+            _leaveallocrepo = leaveallocrepo;
             _mapper = mapper;
             _userManager = userManager;
         }
@@ -54,21 +61,83 @@ namespace leave_management.Controllers
         // GET: LeaveRequestController/Create
         public ActionResult Create()
         {
-            return View();
+            var leaveTypes = _leavetyperepo.FindAll();
+            var leaveTypesItems = leaveTypes.Select(q => new SelectListItem
+            {
+                Text = q.Name,
+                Value = q.Id.ToString()
+            });
+            var model = new CreateLeaveRequestVM
+            {
+                LeaveTypes = leaveTypesItems
+            };
+            return View(model);
         }
 
         // POST: LeaveRequestController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(CreateLeaveRequestVM model)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var startDate = Convert.ToDateTime(model.StartDate);
+                var endDate = Convert.ToDateTime(model.EndDate);
+                var leaveTypes = _leavetyperepo.FindAll();
+                var leaveTypesItems = leaveTypes.Select(q => new SelectListItem
+                {
+                    Text = q.Name,
+                    Value = q.Id.ToString()
+                });
+                model.LeaveTypes = leaveTypesItems;
+                if (!ModelState.IsValid)
+                {
+                    return View(model);
+                }
+                if(DateTime.Compare(startDate, endDate) > 1)
+                {
+                    ModelState.AddModelError("", "Start date is not right.");
+                    return View(model);
+                }
+
+
+
+                var employee = _userManager.GetUserAsync(User).Result;
+                var allocation = _leaveallocrepo.GetLeaveAllocationsByEmployeeAndType(employee.Id, model.LeaveTypeId);
+                int daysRequested = (int)(endDate.Date - startDate.Date).TotalDays;
+
+                if (daysRequested > allocation.NumberOfDays)
+                {
+                    ModelState.AddModelError("", "You have insuffient days to Apply leave");
+                    return View(model);
+                }
+
+
+                var leaveRequestsModel = new LeaveRequestVM
+                {
+                    RequestingEmployeeId = employee.Id,
+                    StartDate = startDate,
+                    EndDate = endDate,
+                    Approved = null,
+                    DateRequested = DateTime.Now,
+                    DateActioned = DateTime.Now,
+                    LeaveTypeId = model.LeaveTypeId
+                };
+                var leaveRequest = _mapper.Map<LeaveRequest>(leaveRequestsModel);
+                var isSuccess = _leaveRequestRepo.Create(leaveRequest);
+
+                if (!isSuccess)
+                {
+                    ModelState.AddModelError("", "Error while submitting");
+                    return View(model);
+                }
+
+                return RedirectToAction(nameof(Index),"Home");
             }
-            catch
+            catch(Exception ex)
             {
-                return View();
+                ModelState.AddModelError("", "Something went wrong");
+                return View(model);
             }
         }
 
