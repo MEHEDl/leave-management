@@ -67,7 +67,7 @@
             <th>
                 Approval status
             </th>
-            <th></th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -103,9 +103,8 @@
                 }
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                <a class="btn btn-outline-warning" asp-action="Details" asp-route-id="@item.Id">
+                <i class="fa fa-file"></i> Review</a>
             </td>
         </tr>
 }
