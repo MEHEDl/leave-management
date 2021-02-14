@@ -1,3 +1,7 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@using leave_management.Data
+@inject SignInManager<Employee> SignInManager
+@inject UserManager<Employee> UserManager
+@{
     Layout = "_Layout";
 }
