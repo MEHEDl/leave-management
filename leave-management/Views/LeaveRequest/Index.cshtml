@@ -2,43 +2,71 @@
 
 @{
     ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+
 
 <div class="row">
     <div class="col-md-3">
-         <div class="card" style="width: 18rem;">
-             <div class="card-body text-center">
-                 <h1 class="card-title">@Model.TotalRequests</h1>
-                 <h5 class="card-text">@Html.DisplayNameFor(moddel => Model.TotalRequests)</h5>
-             </div>
-         </div>
+        <div class="small-box bg-info">
+            <div class="inner">
+                <h3>@Model.TotalRequests</h3>
+
+                <p>@Html.DisplayNameFor(moddel => Model.TotalRequests)</p>
+            </div>
+            <div class="icon">
+                <i class="fa fa-paper-plane" aria-hidden="true"></i>
+            </div>
+            <a href="#" class="small-box-footer">
+               
+            </a>
+        </div>
     </div>
     <div class="col-md-3">
-         <div class="card" style="width: 18rem;">
-             <div class="card-body text-center">
-                 <h1 class="card-title text-warning">@Model.PendingRequests</h1>
-                 <h5 class="card-text">@Html.DisplayNameFor(moddel => Model.PendingRequests)</h5>
-             </div>
-         </div>
+        <div class="small-box bg-warning">
+            <div class="inner">
+                <h3>@Model.PendingRequests</h3>
+
+                <p>@Html.DisplayNameFor(moddel => Model.PendingRequests)</p>
+            </div>
+            <div class="icon">
+                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+            </div>
+            <a href="#" class="small-box-footer">
+                <!--More info <i class="fas fa-arrow-circle-right"></i>-->
+            </a>
+        </div>
+
     </div>
     <div class="col-md-3">
-         <div class="card" style="width: 18rem;">
-             <div class="card-body text-center">
-                 <h1 class="card-title text-success">@Model.ApprovedRequests</h1>
-                 <h5 class="card-text">@Html.DisplayNameFor(moddel => Model.ApprovedRequests)</h5>
-             </div>
-         </div>
+
+        <div class="small-box bg-success">
+            <div class="inner">
+                <h3>@Model.ApprovedRequests</h3>
+
+                <p>@Html.DisplayNameFor(moddel => Model.ApprovedRequests)</p>
+            </div>
+            <div class="icon">
+                <i class="fa fa-check" aria-hidden="true"></i>
+            </div>
+            <a href="#" class="small-box-footer">
+
+            </a>
+        </div>
     </div>
     <div class="col-md-3">
-         <div class="card" style="width: 18rem;">
-             <div class="card-body text-center">
-                 <h1 class="card-title text-danger">@Model.RejectedRequests</h1>
-                 <h5 class="card-text">@Html.DisplayNameFor(moddel => Model.RejectedRequests)</h5>
-             </div>
-         </div>
+        <div class="small-box bg-danger">
+            <div class="inner">
+                <h3>@Model.RejectedRequests</h3>
+
+                <p>@Html.DisplayNameFor(moddel => Model.RejectedRequests)</p>
+            </div>
+            <div class="icon">
+                <i class="fa fa-times" aria-hidden="true"></i>
+            </div>
+            <a href="#" class="small-box-footer">
+            </a>
+        </div>
     </div>
 </div>
 

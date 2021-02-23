@@ -21,7 +21,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link href="~/css/all.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="~/css/dataTable.css" />
+    <link rel="stylesheet" href="~/css/dataTables.bootstrap4.min.css" />
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
@@ -166,7 +166,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
-                        with font-awesome or any other icon font library -->
+                    with font-awesome or any other icon font library -->
 
                         <li class="nav-item">
                             <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link">
@@ -178,7 +178,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </li>
 
                         <li class="nav-item">
-                            <a asp-area="" asp-controller="LeaveRequest" asp-action="MyLeave" class="nav-link">
+                            <a asp-area="" asp-controller="LeaveRequest" asp-action="Create" class="nav-link">
                                 <i class="nav-icon fas fa-pen-alt"></i>
                                 <p>
                                     Apply For Leave
@@ -187,7 +187,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </li>
 
                         <li class="nav-item">
-                            <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link">
+                            <a asp-area="" asp-controller="LeaveRequest" asp-action="MyLeave" class="nav-link">
                                 <i class="nav-icon fas fa-book-open"></i>
                                 <p>
                                     My Leave
@@ -199,43 +199,43 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         {
                             @if (User.IsInRole("Administrator"))
                             {
-                            <li class="nav-item has-treeview menu-open">
-                                <a href="#" class="nav-link active">
-                                    <i class="nav-icon fas fa-tachometer-alt"></i>
-                                    <p>
-                                        Manage
-                                        <i class="right fas fa-angle-left"></i>
-                                    </p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a asp-controller="LeaveTypes" asp-action="Index" class="nav-link active">
-                                            <i class="far fa-list nav-icon"></i>
-                                            <p>Leave Types</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a asp-controller="LeaveAllocation" asp-action="Index" class="nav-link">
-                                            <i class="far fa-angellist nav-icon"></i>
-                                            <p>Leave Allocations</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a asp-controller="LeaveRequest" asp-action="Index" class="nav-link">
-                                            <i class="far fa-cogs nav-icon"></i>
-                                            <p>Leave Requests</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a asp-controller="LeaveAllocation" asp-action="ListEmployees" class="nav-link">
-                                            <i class="far fa-users nav-icon"></i>
-                                            <p>Employees</p>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
+                                <li class="nav-item has-treeview menu-open">
+                                    <a href="#" class="nav-link active">
+                                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                                        <p>
+                                            Manage
+                                            <i class="right fas fa-angle-left"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        <li class="nav-item">
+                                            <a asp-controller="LeaveTypes" asp-action="Index" class="nav-link">
+                                                <i class="fas fa-list nav-icon"></i>
+                                                <p>Leave Types</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a asp-controller="LeaveAllocation" asp-action="Index" class="nav-link">
+                                                <i class="fas fa-user-plus nav-icon"></i>
+                                                <p>Leave Allocations</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a asp-controller="LeaveRequest" asp-action="Index" class="nav-link">
+                                                <i class="fas fa-cogs nav-icon"></i>
+                                                <p>Leave Requests</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a asp-controller="LeaveAllocation" asp-action="ListEmployees" class="nav-link">
+                                                <i class="fas fa-users nav-icon"></i>
+                                                <p>Employees</p>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
                             }
-                          }
+                        }
 
                     </ul>
                 </nav>
@@ -247,9 +247,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
-            @RenderBody()
+            <div class="content-header">
+                <div class="container-fluid">
+                    @RenderBody()
+                </div>
+            </div>
             <!-- /.content-header -->
         </div>
+
+
         <!-- /.content-wrapper -->
         <!-- Control Sidebar -->
         <aside class="control-sidebar control-sidebar-dark">
@@ -282,7 +288,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- AdminLTE App -->
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="~/js/dataTable.js" asp-append-version="true"></script>
+    <script src="~/js/jquery.dataTables.min.js" asp-append-version="true"></script>
+    <script src="~/js/dataTables.bootstrap4.min.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
     <script>
         $(document).ready(function () {

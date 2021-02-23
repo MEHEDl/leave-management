@@ -95,7 +95,7 @@ namespace leave_management.Controllers
 
                 allocation.NumberOfDays -= daysRequested;
 
-                leaveRequest.Approved = false;
+                leaveRequest.Approved = true;
                 leaveRequest.ApprovedById = user.Id;
                 leaveRequest.DateActioneded = DateTime.Now;
 
